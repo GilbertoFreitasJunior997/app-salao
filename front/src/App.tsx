@@ -1,8 +1,15 @@
+import { ThemeProvider } from "styled-components";
+import { globalStyle, theme } from "./globals";
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
+  const GlobalStyle = globalStyle;
+
   return (
-    <div>
-      Hello world!
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <AppRoutes />
+    </ThemeProvider >
   );
 }
 
