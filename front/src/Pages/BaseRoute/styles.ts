@@ -27,6 +27,7 @@ export const Navbar = styled.div`
         font-weight: bolder;
         margin-left: 50px;
         align-self: center;
+        color: ${p => p.theme.dark};
 
         transition: all 500ms ease-in-out;
         cursor: pointer;
