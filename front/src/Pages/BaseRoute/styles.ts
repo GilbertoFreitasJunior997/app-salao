@@ -41,7 +41,7 @@ export const Navbar = styled.div`
     .options {
         align-self: center;
         margin-left: auto;
-        margin-right: 50px;
+        margin-right: 85px;
 
         display: flex;
         gap: 20px;
