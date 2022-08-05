@@ -24,7 +24,9 @@ const BaseRoute: FC<BaseRouteProps> = ({ component: Page }) => {
             </Navbar>
 
             <Main>
-                <Page />
+                <div className="container">
+                    <Page />
+                </div>
             </Main>
             {/* <Footer /> */}
         </PageContainer>

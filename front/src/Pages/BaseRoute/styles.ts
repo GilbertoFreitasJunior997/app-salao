@@ -7,10 +7,13 @@ export const PageContainer = styled.div`
     flex-direction: column;
     overflow-x: hidden;
 
-    background-color: white;
+    background-color: ${p => p.theme.secondary};
 `
 
 export const Navbar = styled.div`
+    position: fixed;
+    top: 0;
+
     height: 60px;
     background-color: ${p => p.theme.primary};
     width: 100vw;
@@ -88,7 +91,18 @@ export const Navbar = styled.div`
 `
 
 export const Main = styled.main`
-  margin: 20px;
+  margin: 80px 20px 20px 20px;
+
+  .container {
+      background-color: white;
+      width: 100%;
+      min-height: 80vh;
+
+      border-radius: 15px;
+      padding: 50px 40px;
+      color: ${p => p.theme.dark};
+      box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 export const Footer = styled.div`

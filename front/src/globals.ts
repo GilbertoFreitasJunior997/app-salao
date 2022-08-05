@@ -10,7 +10,8 @@ export const theme = {
 export const globalStyle = createGlobalStyle`
     body {
         overflow-x: hidden;
-    }
+        background-color: #C2CAD0;
+    };
 
     * {
         margin: 0;
