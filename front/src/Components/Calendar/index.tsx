@@ -1,5 +1,7 @@
 import { FC } from "react";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import CalendarioProps from "./props";
+import { CalendarChangeMonthButton, CalendarContainer, CalendarContent, CalendarDayNumberCell, CalendarDayTitleCell, CalendarHeader } from "./styles";
 
 const Calendario: FC<CalendarioProps> = ({ mes, onNext, onPrevious }) => {
     const dataAtual = new Date();
@@ -23,45 +25,31 @@ const Calendario: FC<CalendarioProps> = ({ mes, onNext, onPrevious }) => {
         numerosDias.push(i);
     }
 
+    const isSameMonth = data.getMonth() === dataAtual.getMonth();
+
+    const isDisabled = (dia: number) => {
+        const diaSemanaNumero = new Date(data.getFullYear(), data.getMonth(), dia).getDay();
+        return (diaSemanaNumero === 0 || diaSemanaNumero === 6) || (isSameMonth && dia < dataAtual.getDate())
+    };
+
     return (
-        <div
-            style={{ display: "flex", flexDirection: "column", minWidth: "100vw", placeContent: "center" }}
-        >
-            <button
-                onClick={onNext}
-                disabled={mes === 11}
-            >
-                Proximo
-            </button>
-            <button
-                onClick={onPrevious}
-                disabled={mes === 0 || (mes - 1 < dataAtual.getMonth())}
-            >
-                Anterior
-            </button>
-            <div
-                style={{
-                    width: "100%",
-                    height: "100px",
-                    display: "flex",
-                    placeContent: "center"
-                }}
-            >
-                <h3 style={{ placeSelf: "center" }}>
-                    {nomesMeses[data.getMonth()]}
-                </h3>
-            </div>
-
-
-            <div
-                style={{
-                    width: "fit-content",
-                    display: "grid",
-                    gridTemplateColumns: "repeat(7, 1fr)",
-                    gap: "5px",
-                    placeSelf: "center",
-                }}
-            >
+        <CalendarContainer>
+            <CalendarHeader>
+                <CalendarChangeMonthButton
+                    onClick={onPrevious}
+                    disabled={mes === 0 || (mes - 1 < dataAtual.getMonth())}
+                >
+                    <MdArrowLeft size={40} />
+                </CalendarChangeMonthButton>
+                {nomesMeses[data.getMonth()]}
+                <CalendarChangeMonthButton
+                    onClick={onNext}
+                    disabled={mes === 11}
+                >
+                    <MdArrowRight size={40} />
+                </CalendarChangeMonthButton>
+            </CalendarHeader>
+            <CalendarContent>
                 {nomesDias.map(x => {
                     return (
                         <GridDayTitleCell
@@ -80,13 +68,14 @@ const Calendario: FC<CalendarioProps> = ({ mes, onNext, onPrevious }) => {
                         <GridDayNumberCell
                             key={x}
                             text={x.toString()}
-                            disabled={data.getMonth() === dataAtual.getMonth() && x < dataAtual.getDate()}
+                            disabled={isDisabled(x)}
+                            today={isSameMonth && x === data.getDate()}
                         />
                     )
                 })}
 
-            </div>
-        </div>
+            </CalendarContent>
+        </CalendarContainer >
     )
 }
 
@@ -96,41 +85,27 @@ type GridCellProps = {
     text: string;
 }
 
-const GridDayTitleCell: FC<GridCellProps> = ({ text }) => {
-    return (
-        <div
-            style={{
-                border: "3px solid red",
-                width: "100%",
-                display: "flex",
-                placeItems: "center",
-                placeContent: "center",
-                height: "50px",
-                cursor: "pointer"
-            }}>
-            {text}
-        </div>
-    )
-}
+const GridDayTitleCell: FC<GridCellProps> = ({ text }) => (
+    <CalendarDayTitleCell>
+        {text}
+    </CalendarDayTitleCell>
+)
+
 
 type GridDayNumberCellProps = GridCellProps & {
     disabled: boolean;
+    today: boolean;
 }
 
-const GridDayNumberCell: FC<GridDayNumberCellProps> = ({ text, disabled }) => {
+const GridDayNumberCell: FC<GridDayNumberCellProps> = ({ text, disabled, today }) => {
     return (
-        <div
-            style={{
-                border: "3px solid red",
-                width: "100%",
-                display: "flex",
-                placeItems: "center",
-                placeContent: "center",
-                aspectRatio: "1 / 1",
-                cursor: disabled ? "default" : "pointer",
-                backgroundColor: disabled ? "lightgray" : "transparent"
-            }}>
-            {text}
-        </div>
+        <CalendarDayNumberCell
+            disabled={disabled}
+            today={today}
+        >
+            <span>
+                {text}
+            </span>
+        </CalendarDayNumberCell>
     )
 }

@@ -11,23 +11,21 @@ export const PageContainer = styled.div`
 `
 
 export const Navbar = styled.div`
-    height: 80px;
+    height: 60px;
     background-color: ${p => p.theme.primary};
-    width: 103vw;
+    width: 100vw;
     box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.5);
     margin-bottom: 10px;
 
-    border-radius: 0px 0px 0px 20px;
-
+    border-radius: 3px;
     display: flex;
 
     .logo {
-        font-family: 'Dancing Script', sans-serif;
-        font-size: 3em;
+        font-size: 2em;
         font-weight: bolder;
         margin-left: 50px;
         align-self: center;
-        color: ${p => p.theme.dark};
+        color: white;
 
         transition: all 500ms ease-in-out;
         cursor: pointer;
@@ -46,24 +44,45 @@ export const Navbar = styled.div`
         display: flex;
         gap: 20px;
 
-        .user{
+        > * {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2em;
-            border-radius: 100%;
 
-            background-color: ${p => p.theme.secondary};
+            font-weight: bold;
+            font-size: 1.2em;
             box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.5);
-            width: 40px;
-            height: 40px;
+            
+            color: white;
+            border-color: white;
+            background-color: ${p => p.theme.primary};
 
-            transition: all 300ms ease-in-out;
+            border-radius: 4px;
+            border: 3px solid;
             cursor: pointer;
 
-            :hover{
+            transition: all 150ms ease-in-out;
+
+            :hover {
+                transform: scale(1.05);
+                color: ${p => p.theme.primary};
+                background-color: white;
+            }
+
+            :active {
                 transform: scale(1.1);
             }
+        }
+
+        .agendar-consulta{
+            padding: 3px;
+        }
+
+        .user{
+            font-size: 2em;
+            border-radius: 100%;
+            width: 40px;
+            height: 40px;
         }
     }
 `

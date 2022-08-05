@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../Components/Button";
-import { Footer, Main, Navbar, PageContainer } from "./styles";
+import { Main, Navbar, PageContainer } from "./styles";
 import { MdPerson } from 'react-icons/md'
 import BaseRouteProps from "./types";
 
@@ -14,9 +13,10 @@ const BaseRoute: FC<BaseRouteProps> = ({ component: Page }) => {
                 </Link>
 
                 <div className="options">
-                    <Button className="agendar-consulta" title="Agendar Consulta">
+                    <Link to='/' className="agendar-consulta" title="Agendar Consulta">
                         Agendar Consulta
-                    </Button>
+                    </Link>
+
                     <div className="user" title="Usuário">
                         <MdPerson />
                     </div>
