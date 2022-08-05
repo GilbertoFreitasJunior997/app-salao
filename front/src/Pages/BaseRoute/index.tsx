@@ -13,7 +13,7 @@ const BaseRoute: FC<BaseRouteProps> = ({ component: Page }) => {
                 </Link>
 
                 <div className="options">
-                    <Link to='/' className="agendar-consulta" title="Agendar Consulta">
+                    <Link to='/agendar' className="agendar-consulta" title="Agendar Consulta">
                         Agendar Consulta
                     </Link>
 
