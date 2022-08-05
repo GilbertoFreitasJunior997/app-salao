@@ -1,21 +1,35 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 const MainPage: FC = () => {
+    const [mes, setMes] = useState<number>(new Date().getMonth());
+
     return (
         <h3>
             MAIN PAGE
-            <Calendario />
+            <Calendario
+                mes={mes}
+                onNext={() => setMes(v => v + 1)}
+                onPrevious={() => setMes(v => v - 1)}
+            />
         </h3>
     )
 }
 
 export default MainPage;
 
-const Calendario: FC = () => {
-    const date = new Date();
+type CalendarioProps = {
+    mes: number;
+    onNext(): void;
+    onPrevious(): void;
+}
 
-    const ultimoDiaMesAtual = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    const ultimoDiaMesPassado = new Date(date.getFullYear(), date.getMonth(), 0).getDay();
+const Calendario: FC<CalendarioProps> = ({ mes, onNext, onPrevious }) => {
+    const dataAtual = new Date();
+    const data = new Date();
+    data.setMonth(mes);
+
+    const ultimoDiaMesAtual = new Date(data.getFullYear(), data.getMonth() + 1, 0).getDate();
+    const ultimoDiaMesPassado = new Date(data.getFullYear(), data.getMonth(), 0).getDay();
 
     const diasAnteriores: number[] = [];
     const numerosDias: number[] = [];
@@ -35,6 +49,18 @@ const Calendario: FC = () => {
         <div
             style={{ display: "flex", flexDirection: "column", minWidth: "100vw", placeContent: "center" }}
         >
+            <button
+                onClick={onNext}
+                disabled={mes === 11}
+            >
+                Proximo
+            </button>
+            <button
+                onClick={onPrevious}
+                disabled={mes === 0 || (mes - 1 < dataAtual.getMonth())}
+            >
+                Anterior
+            </button>
             <div
                 style={{
                     width: "100%",
@@ -44,7 +70,7 @@ const Calendario: FC = () => {
                 }}
             >
                 <h3 style={{ placeSelf: "center" }}>
-                    {nomesMeses[date.getMonth()]}
+                    {nomesMeses[data.getMonth()]}
                 </h3>
             </div>
 
@@ -76,6 +102,7 @@ const Calendario: FC = () => {
                         <GridDayNumberCell
                             key={x}
                             text={x.toString()}
+                            disabled={data.getMonth() === dataAtual.getMonth() && x < dataAtual.getDate()}
                         />
                     )
                 })}
@@ -106,7 +133,11 @@ const GridDayTitleCell: FC<GridCellProps> = ({ text }) => {
     )
 }
 
-const GridDayNumberCell: FC<GridCellProps> = ({ text }) => {
+type GridDayNumberCellProps = GridCellProps & {
+    disabled: boolean;
+}
+
+const GridDayNumberCell: FC<GridDayNumberCellProps> = ({ text, disabled }) => {
     return (
         <div
             style={{
@@ -116,7 +147,8 @@ const GridDayNumberCell: FC<GridCellProps> = ({ text }) => {
                 placeItems: "center",
                 placeContent: "center",
                 aspectRatio: "1 / 1",
-                cursor: "pointer"
+                cursor: disabled ? "default" : "pointer",
+                backgroundColor: disabled ? "lightgray" : "transparent"
             }}>
             {text}
         </div>
